@@ -152,3 +152,7 @@ Standard HTTP proxies cannot inspect or decrypt end-to-end TLS/SSL traffic witho
 
 **Q5: How does your rate limiting work?**
 - *Answer:* It logs request timestamps per client IP. If the count of requests within a sliding time window exceeds the threshold, the proxy immediately returns `429 Too Many Requests` with a `Retry-After` header.
+
+**Q6: Why did you use a Thread Pool instead of creating a new thread for every client?**
+
+- **Answer:** A Thread Pool reuses a fixed number of worker threads to handle client requests. It reduces the overhead of creating new threads repeatedly and prevents excessive resource consumption when many clients connect simultaneously. This makes PyProxy more efficient and manageable under heavy traffic.
